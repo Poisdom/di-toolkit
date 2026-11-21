@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#182026" media="(prefers-color-scheme: dark)">
+<title>DI Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top">
+  <a class="brand" href="#/"><span class="mark" aria-hidden="true">DI</span><span class="name">DI Toolkit</span></a>
+  <nav class="tabsnav" aria-label="Secciones">
+    <a href="#/examen" data-top="examen">Examen <span class="when">23/11</span></a>
+    <a href="#/calculadoras" data-top="calculadoras">Calculadoras</a>
+    <a href="#/consulta" data-top="consulta">Consulta</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1"><div class="in">
+
+<!-- ================= EXAMEN (exam.js + app.js) ================= -->
+<section class="view" id="v-examen" aria-labelledby="h-examen" hidden>
+  <header class="exam-h">
+    <div><h1 id="h-examen">Control del lunes 23/11</h1>
+      <p>Se resuelve a mano, sin SolidWorks. Son los cinco cambios que anunció el profesor sobre la solución con rodamientos, en el orden en que salen en el problema. Los datos están enlazados: si cambias el rodamiento, cambia el circlip; si cambias el agujero de la polea, cambian la chaveta y la tuerca.</p></div>
+    <div class="exam-prog"><span id="ex-count" aria-live="polite"></span><div class="prog" aria-hidden="true"><i id="ex-bar"></i></div></div>
+  </header>
+  <div class="exam">
+    <nav class="topics" aria-label="Temas del examen"><ol id="ex-topics"></ol></nav>
+    <article class="topic" id="ex-topic" aria-live="polite"></article>
+  </div>
+</section>
+
+<!-- ================= CALCULADORAS ================= -->
+<section class="view" id="v-calcs" aria-labelledby="h-calcs" hidden>
+  <header class="page-h"><h1 id="h-calcs">Calculadoras</h1><p>Cada una con su propio dato de entrada. Arriba la respuesta; debajo, cómo se hace a mano, el croquis y lo que va en el plano.</p></header>
+  <div id="calc-list" class="answers"></div>
+</section>
+
+<!-- ================= CONSULTA ================= -->
+<section class="view" id="v-consulta" aria-labelledby="h-consulta" hidden>
+  <header class="page-h"><h1 id="h-consulta">Consulta</h1></header>
+  <ul class="links">
+    <li><a href="#/tabla"><b>Tabla Ø 7–200</b><span>Chaveta, circlip, h9 / D10 y soldadura para todos los Ø</span></a></li>
+    <li><a href="#/entrega"><b>Antes de entregar <span class="cnt" data-cnt="entrega"></span></b><span>Comprobaciones del plano y de los archivos, para cualquier práctica</span></a></li>
+  </ul>
+  <section class="block" aria-labelledby="h-ej">
+    <h2 id="h-ej">Ejercicio guiado · Control 2 (2 nov.)</h2>
+    <p class="muted">Eje con collar, una polea con chaveta y circlip y otra soldada, con tus medidas y en orden.</p>
+    <ol class="path" data-ejnav></ol>
+  </section>
+</section>
+
+<!-- ================= CALCULADORA (se construye desde calc/*.js) ================= -->
+<section class="view" id="v-calc" aria-labelledby="h-calc" hidden></section>
+
+<!-- ================= TABLA ================= -->
+<section class="view" id="v-tabla" aria-labelledby="h-tabla" hidden>
+  <header class="page-h"><h1 id="h-tabla">Tabla Ø 7–200</h1><p>Ajuste libre h9 / D10, chavetero H9 / D10. * = no hay anillo DIN 471 de ese tamaño, se usa el vecino. Toca un Ø para usarlo en todas las calculadoras.</p></header>
+  <p class="small" id="tabla-msg" aria-live="polite"></p>
+  <div class="tablewrap"><table id="full">
+    <thead><tr><th>Ø</th><th>Chaveta</th><th>t1 / t2</th><th>Asiento h9</th><th>Agujero D10</th><th>Chav. eje H9</th><th>Chav. cubo D10</th><th>Circlip DIN 471</th><th>Ranura d2</th><th>Ranura m H13</th><th>Soldadura</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</section>
+
+<!-- ================= EJERCICIO · TUS MEDIDAS ================= -->
+<section class="view" id="v-medidas" aria-labelledby="h-medidas" hidden>
+  <nav class="stepnav" aria-label="Ejercicio guiado"><ol class="path" data-ejnav></ol></nav>
+  <header class="page-h"><h1 id="h-medidas">Tus medidas</h1><p>Eje con collar, una polea con chaveta y circlip y otra soldada. Ajuste libre h9 / D10 y chavetero H9 / D10, como en el ejemplo del curso.</p></header>
+  <div class="work">
+    <aside class="data" aria-labelledby="h-md">
+      <h2 id="h-md">Tus datos</h2>
+      <div class="form">
+        <label class="fld">Ø del asiento (mm)<input class="fv" data-s="d" type="number" min="7" max="200" step="any" inputmode="decimal"></label>
+        <label class="fld">Largo del asiento (mm)<input class="fv" data-s="seat" type="number" min="0" step="any" inputmode="decimal" placeholder="—"></label>
+      </div>
+      <div class="alerts" id="ej-alerts" aria-live="polite"></div>
+      <div class="actions"><button id="copy" type="button">Copiar ficha como texto</button><span class="small" id="copy-msg" aria-live="polite"></span></div>
+      <p class="small">Cada número con su explicación y su norma: <a href="#/ajuste">Ajuste</a> · <a href="#/chaveta">Chaveta</a> · <a href="#/anillo">Anillo</a> · <a href="#/soldadura">Soldadura</a>.</p>
+    </aside>
+    <div class="res">
+      <div class="tabs" data-tabs="ej">
+        <div class="tablist" role="tablist" aria-label="Resultado del ejercicio">
+          <button type="button" role="tab" id="ej-t1" aria-controls="ej-p1" data-tab="croquis">Croquis</button>
+          <button type="button" role="tab" id="ej-t2" aria-controls="ej-p2" data-tab="modelar">Para modelar</button>
+          <button type="button" role="tab" id="ej-t3" aria-controls="ej-p3" data-tab="plano">En el plano</button>
+        </div>
+        <section class="tabpanel" role="tabpanel" id="ej-p1" aria-labelledby="ej-t1">
+          <div class="legend"><span><i style="background:var(--you)"></i>lo que modelas y acotas</span><span><i style="background:var(--cl)"></i>tolerancia</span><span><i style="background:var(--grey)"></i>geometría del STEP</span></div>
+          <div class="sketches">
+            <figure class="sk wide"><figcaption>Tu eje · vista lateral<span>Largos a escala; la ranura, exagerada. El collar y el otro asiento salen del STEP: van en proporción, sin cotas.</span></figcaption><div data-v="ejeSvg"></div></figure>
+            <figure class="sk"><figcaption>Tu eje · sección por el chavetero<span>Ancho b y profundidad: d − t1 desde abajo o t1 desde arriba.</span></figcaption><div data-v="secSvg"></div></figure>
+            <figure class="sk"><figcaption>Tu polea · vista de frente<span>Exterior, agujero y chavetero, a escala.</span></figcaption><div data-v="poleaSvg"></div></figure>
+            <figure class="sk"><figcaption>Tu polea · detalle del chavetero<span>t2 desde lo más alto del agujero; la cuerda va entre paréntesis.</span></figcaption><div data-v="detSvg"></div></figure>
+            <figure class="sk"><figcaption>Tu polea · sección<span>Ancho de la polea, exterior y agujero con su tolerancia.</span></figcaption><div data-v="psecSvg"></div></figure>
+          </div>
+        </section>
+        <section class="tabpanel" role="tabpanel" id="ej-p2" aria-labelledby="ej-t2">
+          <div class="grid2">
+            <div class="panel">
+              <div class="grp"><h3>Eje · chavetero</h3>
+                <div class="row"><span class="k">Ancho b</span><span class="v big" data-v="b"></span></div>
+                <div class="row"><span class="k">Largo (= chaveta L)</span><span class="v big" data-v="L"></span></div>
+                <div class="row"><span class="k">Profundidad t1 (Cut-Extrude)</span><span class="v big" data-v="t1"></span></div>
+                <div class="row"><span class="k">Empieza a … del collar</span><span class="v big" data-v="start"></span></div>
+              </div>
+              <div class="grp"><h3>Eje · ranura del circlip</h3>
+                <div class="row"><span class="k">Ø fondo d2</span><span class="v big" data-v="d2"></span></div>
+                <div class="row"><span class="k">Ancho m</span><span class="v big" data-v="m"></span></div>
+                <div class="row"><span class="k">Pared lado polea a … del collar</span><span class="v big" data-v="hub"></span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="grp"><h3>Polea</h3>
+                <div class="row"><span class="k">Agujero</span><span class="v big" data-v="dD"></span></div>
+                <div class="row"><span class="k">Exterior</span><span class="v big" data-v="odD"></span></div>
+                <div class="row"><span class="k">Ancho (extrusión)</span><span class="v big" data-v="hub"></span></div>
+                <div class="row"><span class="k">Chavetero: ancho b</span><span class="v big" data-v="b"></span></div>
+                <div class="row"><span class="k">Chavetero: t2 sobre el agujero</span><span class="v"><span class="big" data-v="t2"></span><br><span class="small">o <span data-v="dpt2"></span> desde abajo del agujero</span></span></div>
+              </div>
+              <div class="grp"><h3>Toolbox y soldadura</h3>
+                <div class="row"><span class="k">Chaveta</span><span class="v mono" data-v="keyCfg"></span></div>
+                <div class="row"><span class="k">Circlip for shafts normal</span><span class="v mono" data-v="ring"></span></div>
+                <div class="row"><span class="k">Soldadura (3 cordones)</span><span class="v mono" data-v="weld"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="tabpanel" role="tabpanel" id="ej-p3" aria-labelledby="ej-t3">
+          <p class="small">Lo que tiene que poner cada cota. Sirve para comprobar el PDF. <span class="g">Gris</span> = geometría que venía dada (STEP).</p>
+          <div class="tw"><table class="plano"><thead><tr><th scope="col">Cota</th><th scope="col">Se escribe</th></tr></thead><tbody>
+            <tr class="sheet"><th colspan="2" scope="colgroup">Hoja del eje</th></tr>
+            <tr><td>Ø asiento <span class="g">(gris)</span></td><td data-v="tSeat"></td></tr>
+            <tr><td>Chavetero · ancho b</td><td data-v="tKwS"></td></tr>
+            <tr><td>Chavetero · t1 <span class="small">(o d − t1)</span></td><td><span data-v="tT1"></span> <span class="small">o</span> <span data-v="tDT1"></span></td></tr>
+            <tr><td>Ranura · Ø d2</td><td data-v="tD2"></td></tr>
+            <tr><td>Ranura · ancho m</td><td data-v="tM"></td></tr>
+            <tr class="sheet"><th colspan="2" scope="colgroup">Hoja de la polea</th></tr>
+            <tr><td>Agujero Ø d</td><td data-v="tBore"></td></tr>
+            <tr><td>Chavetero · ancho b</td><td data-v="tKwH"></td></tr>
+            <tr><td>Chavetero · t2 <span class="small">(o d + t2)</span></td><td><span data-v="tT2"></span> <span class="small">o</span> <span data-v="tDT2"></span></td></tr>
+            <tr><td>Cuerda <span class="small">(referencia)</span></td><td data-v="tChord"></td></tr>
+            <tr class="sheet"><th colspan="2" scope="colgroup">Ajuste</th></tr>
+            <tr><td>Juego eje h9 / agujero D10</td><td class="mono" data-v="clear"></td></tr>
+          </tbody></table></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PASOS ================= -->
+<section class="view" id="v-pasos" aria-labelledby="h-pasos" data-list="pasos" hidden>
+  <nav class="stepnav" aria-label="Ejercicio guiado"><ol class="path" data-ejnav></ol></nav>
+  <header class="page-h"><h1 id="h-pasos">Paso a paso</h1>
+    <p><span class="who you">Tú</span> = tus manos en SolidWorks · <span class="who cl">Claude</span> = solo dices la palabra. Los números en azul salen de tu Ø y tu asiento. Las marcas se guardan en este navegador.</p>
+    <p class="small">Los pasos <span class="who cl">Claude</span> necesitan el kit <span class="mono">di-control-2</span> (mira <a href="#/ejercicio/claude">Con Claude</a>). Sin él, las tolerancias y los colores los pones tú con <a href="#/ejercicio/medidas">Tus medidas</a>.</p>
+  </header>
+  <div class="progbar"><span class="small" data-progtxt aria-live="polite"></span><div class="prog" aria-hidden="true"><i></i></div><button data-reset type="button">Borrar marcas</button></div>
+  <div class="phase">A · Preparación · 0–5 min</div>
+  <ol class="steps">
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">1</span><b>Abre Claude y di «Control 2: start»</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Terminal en la carpeta <span class="mono">IQS 2026-27</span>.</li><li>Un solo SolidWorks abierto (con dos, los scripts se confunden).</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">2</span><b>Abre el STEP y guárdalo como SLDPRT</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Extrae el <span class="mono">.stp</span> del enunciado en la carpeta del ejercicio.</li><li>File › Open (tipo STEP). Si pregunta por Import Diagnostics: No.</li><li>Material › <b>AISI 304</b>. File › Save As › <b>.SLDPRT</b>, mismo nombre y carpeta.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">3</span><b>Di «prep»</b><span class="who cl">Claude</span></div><div class="bd"><ul><li>Claude mide el eje y te dice el Ø y el largo del asiento. Escríbelos en <a href="#/ejercicio/medidas">Tus medidas</a> y toda la app los usa.</li></ul></div></div></li>
+  </ol>
+  <div class="phase">B · Modelado · 5–20 min</div>
+  <ol class="steps">
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">4</span><b>Chavetero del eje</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Insert › Reference Geometry › Plane: cilindro del asiento + plano Front/Top → Tangent / Parallel.</li><li>Straight Slot de <span class="val" data-v="b"></span> × <span class="val" data-v="L"></span>, empezando a <span class="val" data-v="start"></span> del collar.</li><li>Cut-Extrude › Blind › <span class="val" data-v="t1"></span>.</li></ul><a class="go" href="#/ejercicio/ejemplo">Ver la foto del eje</a></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">5</span><b>Ranura del circlip</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Croquis en Front, con una línea constructiva sobre el eje.</li><li>Rectángulo de ancho <span class="val" data-v="m"></span>; su fondo acotado a la línea constructiva (cota al otro lado) = <span class="val" data-v="d2"></span>.</li><li>Pared del lado de la polea a <span class="val" data-v="hub"></span> del collar. Revolved Cut 360°.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">6</span><b>Polea (pieza nueva)</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Croquis en Front: exterior <span class="val" data-v="odD"></span>, agujero <span class="val" data-v="dD"></span>.</li><li>Chavetero <span class="val" data-v="b"></span> centrado arriba; su lado de arriba a <span class="val" data-v="t2"></span> sobre el agujero (Shift + clic en la circunferencia), o <span class="val" data-v="dpt2"></span> desde abajo.</li><li>Extruye <span class="val" data-v="hub"></span>. AISI 304. Guarda <span class="mono">pulley.SLDPRT</span> en la carpeta.</li></ul></div></div></li>
+  </ol>
+  <div class="phase">C · Ensamblaje · 20–40 min</div>
+  <ol class="steps">
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">7</span><b>Ensamblaje + 2 poleas</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Eje primero (queda fijo), luego la polea dos veces. Guarda el .SLDASM en la carpeta.</li><li>Polea con chaveta: concéntrica, contra el collar, chavetero paralelo al del eje.</li><li>Polea soldada en el otro asiento: concéntrica + contra el collar.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">8</span><b>Chaveta del Toolbox</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Toolbox › DIN › Keys › Parallel Keys › <b>Parallel Key (form A)</b> → <span class="val" data-v="keyCfg"></span>.</li><li>Fondo con fondo, lado con lado, extremo redondo concéntrico con el del chavetero.</li></ul><div class="tip" data-v="keyTip"></div></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">9</span><b>Circlip del Toolbox</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Toolbox › DIN › Retaining Rings › <b>Circlip for shafts normal</b> → <span class="val" data-v="ring"></span>.</li><li>Concéntrico con el eje; su cara contra la pared de la ranura del lado de la polea.</li></ul><div class="tip">Déjalos como piezas normales del Toolbox: Claude las convierte en copias de AISI 304 con peso.</div></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">10</span><b>Cordón de soldadura</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Insert › Assembly Feature › <b>Weld Bead</b>: la arista donde la polea soldada toca el eje.</li><li>Tamaño <span class="val">5</span>, <b>Intermittent</b> marcado, cualquier largo y separación (Claude lo deja en 3x).</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">11</span><b>Explosión + líneas de explosión</b><span class="who you">Tú</span></div><div class="bd"><ul><li>ConfigurationManager › clic derecho › New Exploded View: separa circlip, chaveta y poleas.</li><li>Clic derecho en <b>ExplView1</b> › <b>Smart Explode Lines</b>. Guarda.</li></ul><div class="tip">Es lo único que Claude no puede hacer (no hay API). Sin las líneas falla el punto 7.</div></div></div></li>
+  </ol>
+  <div class="phase">D · Plano · 40–75 min</div>
+  <ol class="steps">
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">12</span><b>Plano nuevo, hoja 1 en A3</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Plantilla <span class="mono">IQS_plano</span> (trae el logo). Guarda en la carpeta del ejercicio.</li><li>Hoja 1 <b>A3 apaisado</b>; si el eje es grande, escala 1:2 o 1:5.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">13</span><b>Hoja 1: ensamblaje</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Vista + <b>sección</b> a lo largo del eje (se ven chaveta y circlip; eje rayado).</li><li><b>Isométrica explosionada</b> (Show in exploded state) + Auto Balloon.</li><li><b>BOM</b> con <span class="mono">List_material_template</span> encima del cajetín. Deja hueco encima para la tabla de soldadura.</li></ul><a class="go" href="#/ejercicio/ejemplo">Ver cómo lo hizo el profesor</a></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">14</span><b>Hoja 2: eje</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Cotas del STEP: longitudes, Ø collar, Ø asiento <span class="val" data-v="dD"></span>.</li><li>Sección del chavetero: <span class="val" data-v="b"></span> y <span class="val" data-v="t1"></span>. Largo y posición del chavetero.</li><li>Detalle de la ranura: <span class="val" data-v="m"></span> y <span class="val" data-v="d2"></span>, y su posición.</li><li>Sin tolerancias ni colores: los pone Claude.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">15</span><b>Hoja 3: polea</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Vista de frente (se ve el chavetero) + sección.</li><li>Cotas: agujero <span class="val" data-v="dD"></span>, exterior, ancho, chavetero <span class="val" data-v="b"></span> y <span class="val" data-v="t2"></span> desde arriba del agujero.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">16</span><b>File › Save All y di «check»</b><span class="who you">Tú</span></div></div></li>
+  </ol>
+  <div class="phase">E · Claude y entrega · 75–90 min</div>
+  <ol class="steps">
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">17</span><b>check</b><span class="who cl">Claude</span></div><div class="bd"><ul><li>Arregla cada línea <b>MODEL</b> y añade las cotas <b>MISSING</b>. Guarda y di «check» otra vez.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">18</span><b>fix</b><span class="who cl">Claude</span></div><div class="bd"><ul><li>No toques SolidWorks unos 3 minutos. Objetivo: 16/17, y el punto 7 en el PDF.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">19</span><b>Revisa el PDF</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Está al lado del plano. Si hay cotas encimadas, muévelas y di «pdf».</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">20</span><b>pack</b><span class="who cl">Claude</span></div><div class="bd"><ul><li>Tiene que decir <b>ZIP OK</b>. El zip queda al lado del plano.</li></ul></div></div></li>
+    <li class="step"><input type="checkbox" aria-label="Hecho"><div><div class="hd"><span class="no">21</span><b>Sube PDF + zip a Moodle</b><span class="who you">Tú</span></div><div class="bd"><ul><li>Abre una vez el PDF subido para comprobar que es el bueno.</li></ul></div></div></li>
+  </ol>
+</section>
+
+<!-- ================= EJEMPLO ================= -->
+<section class="view" id="v-ejemplo" aria-labelledby="h-ejemplo" hidden>
+  <nav class="stepnav" aria-label="Ejercicio guiado"><ol class="path" data-ejnav></ol></nav>
+  <header class="page-h"><h1 id="h-ejemplo">Ejemplo del profesor</h1></header>
+  <div class="sub-h"><h2>Las piezas</h2><p class="muted">Renders de los archivos del ejemplo del profesor (Ø15). Tu eje será de otro tamaño, pero las piezas son las mismas. Los números azules son los tuyos.</p></div>
+  <div class="figs">
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-01.jpg" width="900" height="610" loading="lazy" alt="Eje con collar, chavetero y ranura"><span class="bal" style="left:22%;top:22%">1</span><span class="bal" style="left:46%;top:33%">2</span><span class="bal" style="left:61%;top:69%">3</span><span class="bal" style="left:77%;top:75%">4</span></div>
+      <figcaption><h3>El eje</h3><p class="small">El STEP trae solo los cilindros. El chavetero y la ranura los cortas tú, en el lado de la polea con chaveta.</p>
+      <ol class="leg"><li><span class="n">1</span><span>Asiento <span class="val" data-v="dD"></span> h9, largo <span class="val" data-v="seatTxt"></span> (del collar al final)</span></li><li><span class="n">2</span><span>Collar: las dos poleas apoyan en él</span></li><li><span class="n">3</span><span>Chavetero <span class="val" data-v="b"></span> × <span class="val" data-v="L"></span>, prof. <span class="val" data-v="t1"></span></span></li><li><span class="n">4</span><span>Ranura <span class="val" data-v="d2"></span> × <span class="val" data-v="m"></span>, a <span class="val" data-v="hub"></span> del collar</span></li></ol></figcaption></figure>
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-02.jpg" width="900" height="899" loading="lazy" alt="Polea de frente con agujero y chavetero"><span class="bal" style="left:50%;top:55%">1</span><span class="bal" style="left:62%;top:30%">2</span><span class="bal" style="left:84%;top:80%">3</span></div>
+      <figcaption><h3>La polea</h3><p class="small">Una sola pieza usada dos veces: una con chaveta y otra soldada.</p>
+      <ol class="leg"><li><span class="n">1</span><span>Agujero <span class="val" data-v="dD"></span> D10</span></li><li><span class="n">2</span><span>Chavetero <span class="val" data-v="b"></span>, arriba a <span class="val" data-v="t2"></span> sobre el agujero</span></li><li><span class="n">3</span><span>Exterior <span class="val" data-v="odD"></span>, ancho <span class="val" data-v="hub"></span></span></li></ol></figcaption></figure>
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-03.jpg" width="900" height="712" loading="lazy" alt="Chaveta paralela de extremos redondos"></div>
+      <figcaption><h3>La chaveta DIN 6885</h3><p class="small">Paralela, forma A (extremos redondos). Medio metida en el eje (t1) y medio en la polea (t2). L menor que el ancho de la polea.</p>
+      <ol class="leg"><li><span class="n">→</span><span><span class="val" data-v="keyCfg"></span></span></li></ol></figcaption></figure>
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-04.jpg" width="618" height="882" loading="lazy" alt="Circlip DIN 471"></div>
+      <figcaption><h3>El circlip DIN 471</h3><p class="small">Entra en la ranura y sujeta la polea con chaveta contra el collar. Los agujeros son para los alicates. En las fotos del profesor sale una arandela roja DIN 6799; en este ejercicio va este.</p>
+      <ol class="leg"><li><span class="n">→</span><span><span class="val" data-v="ring"></span></span></li></ol></figcaption></figure>
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-05.jpg" width="900" height="765" loading="lazy" alt="Ensamblaje montado"><span class="bal" style="left:27%;top:40%">1</span><span class="bal" style="left:58%;top:52%">2</span><span class="bal" style="left:83%;top:60%">3</span><span class="bal" style="left:93%;top:78%">4</span></div>
+      <figcaption><h3>Montado</h3>
+      <ol class="leg"><li><span class="n">1</span><span>Polea soldada: los 3 cordones van donde toca el eje</span></li><li><span class="n">2</span><span>Polea con chaveta, contra el collar</span></li><li><span class="n">3</span><span>Circlip en la ranura (aquí la arandela del ejemplo)</span></li><li><span class="n">4</span><span>Eje</span></li></ol></figcaption></figure>
+    <figure class="fig"><div class="pic"><img src="img/ejemplo-06.jpg" width="900" height="659" loading="lazy" alt="Ensamblaje explosionado"><span class="bal" style="left:41%;top:47%">1</span><span class="bal" style="left:14%;top:13%">2</span><span class="bal" style="left:86%;top:76%">3</span><span class="bal" style="left:34%;top:62%">4</span><span class="bal" style="left:71%;top:37%">5</span></div>
+      <figcaption><h3>Explosionado</h3><p class="small">Las discontinuas son las líneas de explosión (punto 7).</p>
+      <ol class="leg"><li><span class="n">1</span><span>Eje</span></li><li><span class="n">2</span><span>Polea soldada</span></li><li><span class="n">3</span><span>Polea con chaveta</span></li><li><span class="n">4</span><span>Chaveta</span></li><li><span class="n">5</span><span>Circlip</span></li></ol></figcaption></figure>
+  </div>
+  <div class="sub-h"><h2>El plano, hoja a hoja</h2><p class="muted">A la izquierda, lo que tiene que haber (con el punto de la corrección). A la derecha, cómo lo hizo el profesor. <span class="g">Gris</span> = geometría del STEP; negro = lo que haces tú.</p></div>
+  <article class="panel sheetcols">
+    <div><div class="ph"><h2>Hoja 1 · ensamblaje</h2></div><ul class="need">
+      <li><span class="pt">A3</span>Formato IQS (logo), A3 apaisado</li>
+      <li><span class="pt">11</span>Sección donde se vean chaveta y circlip</li>
+      <li><span class="pt">6–7</span>Isométrica explosionada con líneas</li>
+      <li><span class="pt">2–3</span>Globos + BOM (Material, Weight, Sheet)</li>
+      <li><span class="pt">4</span>Símbolo <span class="mono" data-v="weld"></span> · Claude</li>
+      <li><span class="pt">5</span>Tabla de soldadura encima de la BOM · Claude</li></ul></div>
+    <div class="figs"><figure class="fig"><div class="pic"><img src="img/ejemplo-07.jpg" width="1100" height="981" loading="lazy" alt="Vista y sección del ensamblaje"></div><figcaption><p class="small">Símbolo de soldadura y SECTION D-D con la chaveta (verde) y la arandela.</p></figcaption></figure>
+      <figure class="fig"><div class="pic"><img src="img/ejemplo-08.jpg" width="1100" height="750" loading="lazy" alt="Explosionado con globos"></div><figcaption><p class="small">Explosionado con globos y líneas de explosión.</p></figcaption></figure>
+      <figure class="fig"><div class="pic"><img src="img/ejemplo-09.jpg" width="1100" height="231" loading="lazy" alt="Tabla de soldadura sobre la BOM"></div><figcaption><p class="small">Tabla de soldadura justo encima de la BOM.</p></figcaption></figure></div>
+  </article>
+  <article class="panel sheetcols">
+    <div><div class="ph"><h2>Hoja 2 · eje</h2></div><ul class="need">
+      <li><span class="pt">12</span><span class="g">Gris</span>: longitudes del STEP, Ø collar</li>
+      <li><span class="pt">13</span><span class="g">Ø asiento</span> <span data-v="tSeat"></span></li>
+      <li><span class="pt">15</span>Chavetero <span data-v="tKwS"></span> y t1 <span data-v="tT1"></span></li>
+      <li><span class="pt">14</span>Ranura (detalle): m <span data-v="tM"></span> y <span data-v="tD2"></span></li></ul></div>
+    <div class="figs"><figure class="fig"><div class="pic"><img src="img/ejemplo-10.jpg" width="582" height="912" loading="lazy" alt="Vista del eje con cotas grises"></div><figcaption><p class="small">Cotas del STEP en gris; chavetero y ranura en negro.</p></figcaption></figure>
+      <figure class="fig"><div class="pic"><img src="img/ejemplo-11.jpg" width="431" height="365" loading="lazy" alt="Sección del chavetero"></div><figcaption><p class="small">Sección del chavetero: b y t1 con tolerancia.</p></figcaption></figure>
+      <figure class="fig"><div class="pic"><img src="img/ejemplo-12.jpg" width="766" height="631" loading="lazy" alt="Detalle de la ranura"></div><figcaption><p class="small">Detalle de la ranura (5:1). Al Ø12 del ejemplo le falta la tolerancia; en el tuyo la pone Claude.</p></figcaption></figure></div>
+  </article>
+  <article class="panel sheetcols">
+    <div><div class="ph"><h2>Hoja 3 · polea</h2></div><ul class="need">
+      <li><span class="pt">16</span>Agujero <span data-v="tBore"></span></li>
+      <li><span class="pt">17</span>Chavetero <span data-v="tKwH"></span> y t2 <span data-v="tT2"></span></li>
+      <li><span class="pt">—</span>Cuerda <span data-v="tChord"></span> (opcional)</li></ul></div>
+    <div class="figs"><figure class="fig"><div class="pic"><img src="img/ejemplo-13.jpg" width="570" height="875" loading="lazy" alt="Polea con cotas"></div><figcaption><p class="small">Sección con Ø D10 y vista de frente con el chavetero (b, t2 y la cuerda en gris).</p></figcaption></figure></div>
+  </article>
+</section>
+
+<!-- ================= CON CLAUDE ================= -->
+<section class="view" id="v-claude" aria-labelledby="h-claude" hidden>
+  <nav class="stepnav" aria-label="Ejercicio guiado"><ol class="path" data-ejnav></ol></nav>
+  <header class="page-h"><h1 id="h-claude">Con Claude <span class="who cl">Si usas el kit de Claude</span></h1><p>Para la unión eje–polea, con Claude Code abierto en la carpeta del curso y el kit <span class="mono">di-control-2</span> instalado. Claude revisa y corrige el plano en SolidWorks; tú solo dices la palabra.</p></header>
+  <article class="panel"><div class="ph"><h2>Qué decirle a Claude</h2></div>
+    <div class="cmds">
+      <div class="cmd"><code>Control 2: start</code><span class="small">Al empezar. Autotest y comprueba SolidWorks.</span></div>
+      <div class="cmd"><code>prep</code><span class="small">Eje guardado como SLDPRT en la carpeta → Ø y largo del asiento.</span></div>
+      <div class="cmd"><code>check</code><span class="small">Todo guardado → los 17 puntos y qué arreglar en el modelo.</span></div>
+      <div class="cmd"><code>fix</code><span class="small">Sin líneas MODEL → tolerancias, colores, pesos, soldadura, PDF.</span></div>
+      <div class="cmd"><code>pdf</code><span class="small">Has cambiado algo → vuelve a exportar.</span></div>
+      <div class="cmd"><code>pack</code><span class="small">Zip del Pack and Go, comprobado.</span></div>
+    </div>
+  </article>
+  <div class="grid2">
+    <article class="panel"><div class="ph"><h2>Si algo falla</h2></div>
+      <details class="q"><summary>Profundidad o ancho del chavetero mal (MODEL)</summary><p>Edita la profundidad del Cut-Extrude o el croquis, reconstruye y guarda.</p></details>
+      <details class="q"><summary>Chaveta o circlip de tamaño equivocado</summary><p>Clic derecho en la pieza del ensamblaje › Edit Toolbox Definition › el tamaño de la ficha.</p></details>
+      <details class="q"><summary>L de la chaveta ≥ ancho de la polea</summary><p>Elige una longitud del Toolbox más corta y acorta el chavetero igual.</p></details>
+      <details class="q"><summary>“Ø… is not a DIN 471 size”</summary><p>Normal en p. ej. 152 o 156: se usa el anillo del tamaño de arriba (156 → 160) con su ranura normalizada; <a href="#/ejercicio/medidas">Tus medidas</a> te dice cuál.</p></details>
+      <details class="q"><summary>“no weld bead in the assembly”</summary><p>Añade el cordón (paso 10), guarda y di «fix» otra vez; se puede repetir.</p></details>
+      <details class="q"><summary>Falla el punto 6 o 7 (explosión)</summary><p>Vista explosionada + Smart Explode Lines, guarda y di «pdf».</p></details>
+      <details class="q"><summary>Puntos 16–17 MISSING / no hay hoja de la polea</summary><p>Añade la hoja 3 con la polea y sus cotas.</p></details>
+      <details class="q"><summary>ZIP INCOMPLETE</summary><p>Claude escribe también «… - all files.zip» con todo: sube ese.</p></details>
+      <details class="q"><summary>SolidWorks se cierra</summary><p>Abre el plano otra vez; Claude limpia los bloqueos y repite el último paso.</p></details>
+    </article>
+    <article class="panel"><div class="ph"><h2>Cómo leer la salida</h2></div>
+      <div class="out"> 4 <span class="pass">PASS</span>  Weld symbol        5 &lt;WELD-FILL&gt; 3x11.5(5)
+ 9 <span class="fail">FAIL</span>  Right circlip      -&gt; needs DIN 471 - 15 x 1
+15 <span class="fail">FAIL</span>  Keyhole (shaft)    MISSING t1/d_t1
+MODEL: axis keyway depth t1 is 3.1, DIN says 3</div>
+      <div style="display:grid;gap:6px;margin-top:10px">
+        <p><span class="pass">PASS</span> hecho. <span class="fail">FAIL</span> lo arregla «fix» o el motivo dice qué hacer.</p>
+        <p><b>MODEL</b>: problema de geometría, lo arreglas tú en la pieza.</p>
+        <p><b>MISSING</b>: falta esa cota en la hoja; añádela y di «check».</p>
+        <p><b>WARN</b>: detalles del profesor (A3, cuerda). Si sobra tiempo.</p>
+      </div>
+    </article>
+  </div>
+  <div class="grid2">
+    <article class="panel"><div class="ph"><h2>Plan de tiempo</h2><span class="small">2 h, unos 90 min de trabajo</span></div>
+      <div class="time">
+        <div class="t">0–5</div><div>STEP → SLDPRT, «prep»</div>
+        <div class="t">5–20</div><div>Chavetero, ranura, polea</div>
+        <div class="t">20–40</div><div>Ensamblaje, Toolbox, soldadura, explosión + líneas</div>
+        <div class="t">40–75</div><div>Plano: 3 hojas con cotas, Save All, «check»</div>
+        <div class="t">75–82</div><div>Arreglos del modelo, «fix»</div>
+        <div class="t">82–90</div><div>Revisar PDF, «pack», subir a Moodle</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= ANTES DE ENTREGAR ================= -->
+<section class="view" id="v-entrega" aria-labelledby="h-entrega" data-list="entrega" hidden>
+  <header class="page-h"><h1 id="h-entrega">Antes de entregar</h1><p>Repaso general para cualquier práctica con plano. Lo que pida el enunciado manda sobre esta lista.</p></header>
+  <div class="progbar"><span class="small" data-progtxt aria-live="polite"></span><div class="prog" aria-hidden="true"><i></i></div><button data-reset type="button">Borrar marcas</button></div>
+  <div id="entrega-list"></div>
+</section>
+
+</div></main>
+
+<script src="engine.js"></script>
+<!-- the calculators: one file each; their order here is their order in Calculadoras -->
+<script src="calc/_kit.js"></script>
+<script src="calc/ajuste.js"></script>
+<script src="calc/chaveta.js"></script>
+<script src="calc/anillo.js"></script>
+<script src="calc/soldadura.js"></script>
+<script src="calc/engranaje.js"></script>
+<script src="calc/rodamiento.js"></script>
+<script src="calc/tuerca.js"></script>
+<script src="exam.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "_": "Pulley bore Ø40 (professor's pulley Z118, hub 50) -> M36, ISO 4032 m 31, ISO 4035 m 18, s 55 (Toolbox DIN EN 24032 / 24035).",
+  "cases": [
+    { "d": 40, "in": { "hub": "50" }, "M": 36, "m": 31, "mt": 18, "s": 55, "seat": 48, "L": 60 },
+    { "d": 30, "in": { "hub": "40" }, "M": 24, "m": 21.5, "mt": 12, "s": 36, "seat": 38, "L": 45 }
+  ]
+}

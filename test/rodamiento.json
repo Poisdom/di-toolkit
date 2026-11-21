@@ -1,0 +1,8 @@
+{
+  "_": "Professor's numbers: 50 k5 with a 6210 = interference 2 to 25 (exam e-mail 2026-11); housing Ø90 clearance 2-34 -> G3 (12,18) (DI-S39t p. 4). 6211 = the exam's example change.",
+  "cases": [
+    { "d": 50, "in": { "serie": "62" }, "name": "6210", "D": 90, "B": 20, "ring": [-12, -15], "shaft": ["k5", 13, 2, 2, 25], "best": "k5", "hole": ["G3", 18, 12, 12, 33], "hbest": "G3" },
+    { "d": 55, "in": { "serie": "62" }, "name": "6211", "D": 100, "B": 21, "ring": [-15, -15], "shaft": ["k5", 15, 2, 2, 30], "best": "k4", "hole": ["G3", 18, 12, 12, 33], "hbest": "G3" },
+    { "d": 50, "in": { "serie": "72B" }, "name": "7210B", "D": 90, "B": 20, "ring": [-12, -15], "shaft": ["k5", 13, 2, 2, 25], "best": "k5", "hole": ["G3", 18, 12, 12, 33], "hbest": "G3" }
+  ]
+}

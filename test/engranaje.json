@@ -1,0 +1,11 @@
+{
+  "_": "DI-S38t (professor's solved example) and Tarea 38 con engranajes (Guillermo's own gear). dp/de checked to 0.001.",
+  "cases": [
+    { "d": 65, "in": { "m": "5", "z": "21", "beta": "20", "mano": "LH", "fw": "15", "correa": "Z", "dpol": "40", "wa": "4", "wn": "2", "we": "25" },
+      "dp": 111.739, "de": 121.739, "pulley": { "type": "Z", "D": 118, "a": 10, "b": 6, "h": 12, "c": 13, "ang": 38, "d": 112 },
+      "key": [12, 8, 32, 5, 3.3], "cfg": "DIN - LH Helical gear 5M 21T 20HA 20PA 15FW ---21A75H50L65N" },
+    { "d": 65, "in": { "m": "5", "z": "21", "beta": "15", "mano": "RH", "fw": "12", "correa": "Z", "dpol": "40", "wa": "4", "wn": "2", "we": "25" },
+      "dp": 108.704, "de": 118.704, "pulley": { "type": "Z", "D": 118, "a": 10, "b": 6, "h": 12, "c": 13, "ang": 38, "d": 112 },
+      "key": [12, 8, 32, 5, 3.3], "cfg": "DIN - RH Helical gear 5M 21T 15HA 20PA 12FW ---21A75H50L65N" }
+  ]
+}
