@@ -29,23 +29,27 @@
 * { box-sizing: border-box }
 [hidden] { display: none !important }
 html { scroll-padding-top: calc(var(--top-h) + 12px) }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 var(--body); -webkit-font-smoothing: antialiased }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 var(--body); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale }
+p, li, figcaption, dd, .alert, summary { text-wrap: pretty }
 ::selection { background: var(--you-bg); color: var(--ink) }
 h1, h2, h3 { line-height: 1.2; margin: 0; text-wrap: balance }
 h1 { font: 600 2rem/1.1 var(--display); letter-spacing: .005em }
 h2 { font-size: 1.125rem; font-weight: 600 }
 h3 { font-size: 1rem; font-weight: 600 }
 p { margin: 0; max-width: 72ch }
+.exam-prog, [data-progtxt], .cnt, .when, .need .pt, .time .t { font-variant-numeric: tabular-nums }
 a { color: var(--you); text-underline-offset: 2px }
 .mono { font-family: var(--mono); font-size: .92em }
 .muted { color: var(--muted) }
 .small { font-size: .875rem; color: var(--muted) }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap }
 :focus-visible { outline: 2px solid var(--you); outline-offset: 2px; border-radius: 4px }
-button, .btn { font: 600 .9rem var(--body); padding: 7px 14px; min-height: 36px; border: 1px solid var(--line); background: var(--sheet); color: var(--ink); border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: border-color .15s, background-color .15s }
-button:hover, .btn:hover { border-color: var(--muted) }
-button:active { background: var(--soft) }
-button:disabled { opacity: .5; cursor: default }
+button, .btn { font: 600 .9rem var(--body); padding: 8px 14px; min-height: 40px; border: 1px solid var(--line); background: var(--sheet); color: var(--ink); border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  transition-property: border-color, background-color, transform; transition-duration: .15s; transition-timing-function: ease-out }
+@media (hover: hover) { button:hover, .btn:hover { border-color: var(--muted) } }
+button:active, .btn:active { background: var(--soft); transform: scale(.97) }
+.tablist [role="tab"]:active, td button.lnk:active { transform: none }
+button:disabled { opacity: .5; cursor: default; transform: none }
 kbd { font: 500 .75rem var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; background: var(--sheet) }
 svg { overflow: visible }
 
@@ -58,7 +62,7 @@ svg { overflow: visible }
 .brand .name { font: 700 1.3rem var(--display); white-space: nowrap }
 .tabsnav { display: flex; align-self: stretch; margin-left: 8px }
 .tabsnav a { display: flex; align-items: center; gap: 6px; padding: 0 14px; color: var(--muted); font-weight: 600; text-decoration: none; position: relative; white-space: nowrap; transition: color .15s }
-.tabsnav a:hover { color: var(--ink) }
+@media (hover: hover) { .tabsnav a:hover { color: var(--ink) } }
 .tabsnav a[aria-current="page"] { color: var(--you) }
 .tabsnav a[aria-current="page"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--you) }
 .tabsnav a:focus-visible, .sec > summary:focus-visible { outline-offset: -4px }
@@ -83,18 +87,19 @@ main:focus { outline: none }
 .form, .form .fg { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 116px), 1fr)); gap: 12px; align-items: end }
 .form fieldset { grid-column: 1 / -1; min-width: 0; margin: 0; padding: 12px 0 0; border: 0; border-top: 1px solid var(--line-2) }
 .form fieldset:first-child { border-top: 0; padding-top: 0 }
-.form legend { padding: 0; font-weight: 600; font-size: .9rem; margin-bottom: 8px }
+.form legend { float: left; width: 100%; padding: 0; font-weight: 600; font-size: .9rem; margin-bottom: 8px }
+.form fieldset > .fg { clear: both }
 .form > p, .form > .chips, .form .fld:has(select) { grid-column: 1 / -1 }
 .fld { display: grid; gap: 4px; font-size: .875rem; font-weight: 500; color: var(--muted); line-height: 1.3 }
 .opt { display: block; font-size: .78rem; font-weight: 400 }
 .fv { width: 100%; min-width: 0; font: 500 1.05rem var(--mono); padding: 7px 10px; min-height: 40px; border: 1px solid var(--line); border-radius: 6px; background: var(--sheet); color: var(--ink); transition: border-color .15s, box-shadow .15s }
-.fv:hover { border-color: var(--muted) }
+@media (hover: hover) { .fv:hover { border-color: var(--muted) } }
 .fv:focus { outline: none; border-color: var(--you); box-shadow: 0 0 0 3px var(--you-bg) }
 .fv::placeholder { color: var(--muted); opacity: .7 }
 .fv:invalid { border-color: var(--bad) }
 select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
-.chip { font: 500 .85rem var(--mono); padding: 4px 9px; min-height: 30px }
+.chip { font: 500 .85rem var(--mono); padding: 6px 11px; min-height: 40px }
 .chip[aria-pressed="true"] { background: var(--you-bg); border-color: var(--you); color: var(--you) }
 
 /* ---- alerts ---- */
@@ -126,7 +131,7 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .tabs { display: grid; gap: 16px; min-width: 0 }
 .tablist { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none }
 .tablist [role="tab"] { border: 0; border-radius: 6px 6px 0 0; background: none; padding: 10px 14px; min-height: 44px; color: var(--muted); font-size: .95rem; white-space: nowrap; position: relative }
-.tablist [role="tab"]:hover { color: var(--ink); background: var(--soft) }
+@media (hover: hover) { .tablist [role="tab"]:hover { color: var(--ink); background: var(--soft) } }
 .tablist [role="tab"][aria-selected="true"] { color: var(--you) }
 .tablist [role="tab"][aria-selected="true"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -1px; height: 2px; background: var(--you); border-radius: 2px }
 .tablist [role="tab"]:focus-visible { outline-offset: -2px }
@@ -198,14 +203,16 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .links { list-style: none; margin: 0; padding: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow) }
 .links li + li { border-top: 1px solid var(--line-2) }
 .links a { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 12px 16px; color: var(--ink); text-decoration: none; transition: background-color .15s }
-.links a:hover { background: var(--soft) }
+.links a::after { content: ""; grid-column: 2; grid-row: 1 / span 2; align-self: center; width: 8px; height: 8px; border: solid var(--muted); border-width: 2px 2px 0 0; transform: rotate(45deg); margin-right: 4px; transition-property: transform, border-color; transition-duration: .15s; transition-timing-function: ease-out }
+@media (hover: hover) { .links a:hover { background: var(--soft) } .links a:hover::after { border-color: var(--you); transform: translateX(3px) rotate(45deg) } }
+.links a:active { background: var(--soft) }
 .links b { font-weight: 600; font-size: 1.02rem }
 .links b small { font: 500 .75rem var(--mono); color: var(--muted); margin-left: 4px; white-space: nowrap }
 .links a > span { grid-column: 1; font-size: .875rem; color: var(--muted) }
 
 /* ---- calculator page: data | answer, then folding sections ---- */
 .crumb { font-size: .9rem; margin-bottom: -10px }
-.crumb a { text-decoration: none; font-weight: 600 }
+.crumb a { display: inline-block; padding: 10px 8px 10px 0; margin: -10px 0; text-decoration: none; font-weight: 600 }
 .crumb a::before { content: ""; display: inline-block; width: 7px; height: 7px; border: solid currentColor; border-width: 0 0 2px 2px; transform: rotate(45deg); margin-right: 6px; vertical-align: 1px }
 .ask { display: grid; gap: 16px; align-items: start }
 @media (min-width: 1000px) { .ask { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr) } }
@@ -223,13 +230,14 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 
 .secs { display: grid; gap: 10px; min-width: 0 }
 .sec { background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); min-width: 0 }
-.sec > summary { display: flex; align-items: center; gap: 12px; padding: 13px 16px; min-height: 48px; cursor: pointer; list-style: none; border-radius: 8px }
+.sec > summary { display: flex; align-items: center; gap: 12px; padding: 13px 16px; min-height: 48px; cursor: pointer; list-style: none; border-radius: 7px; transition: background-color .15s }
 .sec > summary::-webkit-details-marker { display: none }
 .sec > summary::before { content: ""; flex: none; width: 8px; height: 8px; border: solid var(--muted); border-width: 0 2px 2px 0; transform: rotate(-45deg); transition: transform .18s cubic-bezier(.2, .8, .2, 1) }
 .sec[open] > summary::before { transform: rotate(45deg) translate(-2px, -2px) }
-.sec > summary:hover { background: var(--soft) }
+@media (hover: hover) { .sec > summary:hover { background: var(--soft) } }
+.sec[open] > .sec-b { animation: enter .2s ease-out }
 .sec > summary h2 { font-size: 1.05rem }
-.sec[open] > summary { border-bottom: 1px solid var(--line-2); border-radius: 8px 8px 0 0 }
+.sec[open] > summary { border-bottom: 1px solid var(--line-2); border-radius: 7px 7px 0 0 }
 .sec-b { display: grid; gap: 14px; padding: 16px; min-width: 0 }
 .sec-b .tw, .sec-b .panel, .sec-b .sk { box-shadow: none }
 .sec-b .norma { border: 0; padding: 0; background: none }
@@ -250,12 +258,14 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .exam-prog { flex: 0 1 240px; display: grid; gap: 6px; font-weight: 600; font-size: .9rem }
 .exam { display: grid; gap: 20px; align-items: start }
 .topics ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px }
-.topics a { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; column-gap: 10px; padding: 10px 12px; min-height: 48px; border-radius: 8px; color: var(--ink); text-decoration: none; border: 1px solid transparent; transition: background-color .15s }
-.topics a:hover { background: var(--sheet); border-color: var(--line) }
+.topics a { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; column-gap: 10px; padding: 10px 12px; min-height: 48px; border-radius: 8px; color: var(--ink); text-decoration: none; border: 1px solid transparent; transition-property: background-color, border-color, transform; transition-duration: .15s; transition-timing-function: ease-out }
+@media (hover: hover) { .topics a:hover { background: var(--sheet); border-color: var(--line) } }
+.topics a:active { transform: scale(.98) }
 .topics a[aria-current] { background: var(--sheet); border-color: var(--you); box-shadow: var(--shadow); font-weight: 600 }
 .topics .no, .topic-h .no { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--sheet); font: 600 .85rem var(--mono); color: var(--muted) }
 .topics a[aria-current] .no { border-color: var(--you); color: var(--you) }
 .topics a.done .no { background: var(--ok); border-color: var(--ok); color: var(--sheet) }
+.topics .no { transition-property: background-color, border-color, color; transition-duration: .2s }
 .topics .ck, .ck { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round }
 .topics .ts { display: none }
 @media (min-width: 900px) {
@@ -278,16 +288,17 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .linked { font: 500 .9rem var(--mono); color: var(--you) }
 .linked:empty { display: none }
 .topic-f { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 4px }
-.donebox { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; min-height: 44px; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--sheet) }
+.donebox { transition-property: background-color, border-color, color; transition-duration: .15s; display: inline-flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; min-height: 44px; padding: 0 14px 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--sheet) }
 .donebox input { width: 20px; height: 20px; margin: 0; accent-color: var(--ok); cursor: pointer }
 .donebox:has(input:checked) { border-color: var(--ok); background: var(--ok-bg); color: var(--ok) }
 .topic-f .btn { min-height: 44px; background: var(--you); border-color: var(--you); color: var(--sheet) }
-.topic-f .btn:hover { background: color-mix(in srgb, var(--you) 88%, var(--ink)) }
+@media (hover: hover) { .topic-f .btn:hover { background: color-mix(in srgb, var(--you) 88%, var(--ink)) } }
 
 /* guided exercise stepper */
 .path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 8px }
-.path a { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; height: 100%; padding: 10px 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); text-decoration: none; transition: border-color .15s, background-color .15s }
-.path a:hover { border-color: var(--muted) }
+.path a { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; height: 100%; padding: 10px 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); text-decoration: none; transition-property: border-color, background-color, transform; transition-duration: .15s; transition-timing-function: ease-out }
+@media (hover: hover) { .path a:hover { border-color: var(--muted) } }
+.path a:active { transform: scale(.98) }
 .path a[aria-current="page"] { border-color: var(--you); background: var(--you-bg) }
 .path .no { grid-row: 1 / span 2; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font: 600 .8rem var(--mono); color: var(--muted); background: var(--sheet) }
 .path a[aria-current="page"] .no { border-color: var(--you); color: var(--you) }
@@ -304,18 +315,20 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .prog i { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--ok); transition: transform .25s cubic-bezier(.2, .8, .2, 1) }
 .phase { font-weight: 600; font-size: .9rem; color: var(--muted); margin: 10px 0 0 }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
-.step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; transition: background-color .15s }
+.step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; cursor: pointer; transition-property: background-color, border-color; transition-duration: .15s }
+@media (hover: hover) { .step:hover { border-color: var(--muted) } }
 .step input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ok); cursor: pointer }
-.step .hd { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center }
-.step .hd b { font-weight: 600; font-size: 1.02rem }
+.step .hd { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline }
+.step .hd b { font-weight: 600; font-size: 1.02rem; flex: 1 1 14ch; min-width: 0 }
 .step .hd .no { font: 500 .82rem var(--mono); color: var(--muted) }
 .step ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 3px; min-width: 0 }
 .step li { min-width: 0; overflow-wrap: anywhere }
 .step .val { font: 600 .92em var(--mono); background: var(--you-bg); color: var(--you); padding: 0 5px; border-radius: 4px; white-space: nowrap }
 @media (max-width: 640px) { .step .val { white-space: normal; overflow-wrap: anywhere } }
 .step .tip { margin-top: 8px; font-size: .9rem; padding: 7px 10px; background: var(--warn-bg); border-radius: 6px }
-.step .go { font-size: .9rem; margin-top: 6px; display: inline-block }
+.step .go { font-size: .9rem; margin-top: 2px; padding: 6px 0; display: inline-block }
 .step.done { background: var(--soft) }
+.step .bd, .step .hd b { transition: opacity .2s }
 .step.done .bd, .step.done .hd b { opacity: .55 }
 #entrega-list { display: grid; gap: 8px }
 
@@ -323,7 +336,7 @@ select.fv { font: 500 .95rem var(--body); cursor: pointer }
 .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px }
 .fig { margin: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; box-shadow: var(--shadow) }
 .pic { position: relative; background: var(--img-bg); border-bottom: 1px solid var(--line) }
-.pic img { display: block; width: 100%; height: auto }
+.pic img { display: block; width: 100%; height: auto; outline: 1px solid rgba(0, 0, 0, .06); outline-offset: -1px }
 .fig figcaption { padding: 12px 14px 14px; display: grid; gap: 6px; min-width: 0 }
 .bal { position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; background: var(--img-bg); border: 2px solid var(--img-ink); color: var(--img-ink); font: 700 14px/1 var(--body); display: grid; place-items: center; box-shadow: 0 0 0 2px var(--img-bg) }
 .leg { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
@@ -359,9 +372,10 @@ details.q p { margin-top: 6px }
 #full td:first-child, #full th:first-child { position: sticky; left: 0; background: var(--sheet); font-weight: 700 }
 #full th:first-child { background: var(--soft); z-index: 2 }
 #full td.m { font-family: var(--mono); font-size: .8rem }
-#full tbody tr:hover td { background: var(--soft) }
+#full tbody tr { cursor: pointer }
+@media (hover: hover) { #full tbody tr:hover td { background: var(--soft) } }
 #full tr.hit td, #full tr.hit td:first-child { background: var(--you-bg) }
-td button.lnk { all: unset; cursor: pointer; font-weight: 700; color: var(--you); padding: 2px 6px }
+td button.lnk { all: unset; cursor: pointer; font-weight: 700; color: var(--you); padding: 6px 8px; margin: -6px -8px }
 td button.lnk:focus-visible { outline: 2px solid var(--you); outline-offset: 2px }
 
 /* ---- sketches: SVG vocabulary shared by every calc/*.js drawing ---- */
@@ -396,6 +410,10 @@ svg .dv { font: 600 10.5px var(--mono); fill: var(--cl) }
 /* labels stay readable where they cross the zero line */
 svg.halo text { paint-order: stroke; stroke: var(--sheet); stroke-width: 4px }
 
+/* ---- entering a view: short fade + rise; leaving is instant */
+@keyframes enter { from { opacity: 0; transform: translateY(4px) } }
+main .view:not([hidden]) { animation: enter .22s ease-out }
+
 /* ---- phone and tablet ---- */
 @media (max-width: 1023px) {
   main { padding-top: 20px }
@@ -413,8 +431,10 @@ svg.halo text { paint-order: stroke; stroke: var(--sheet); stroke-width: 4px }
   .plano th, .plano td { padding: 9px 12px }
   .sec-b { padding: 14px 12px }
   .topic-h h2 { font-size: 1.45rem }
+  .stepnav .path { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px }
+  .stepnav .path a { padding: 8px 10px; font-size: .92rem; line-height: 1.2 }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important } }
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { transition: none !important; animation: none !important; scroll-behavior: auto !important } }
 
 /* ---- print: no chrome, every tab open ---- */
 @media print {

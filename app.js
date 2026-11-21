@@ -120,7 +120,11 @@ const field = ([k, label, hint, kind, opts]) => `<label class="fld">${esc(label)
   ? `<select class="fv" name="${k}" data-s="exam.${k}">${opts.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</select>`
   : `<input class="fv" name="${k}" autocomplete="off" data-s="exam.${k}"${kind === 'num' ? ' type="number" step="any" inputmode="decimal"' : ' spellcheck="false"'}>`}</label>`;
 function buildExam(id) {
+  const prev = exT;
   exT = TOP[id] || TOP[store.get('ditk-exam-last')] || EXAM.topics[0];
+  // switching topic keeps the view, so the CSS view entrance doesn't run: same fade + rise on the topic itself
+  if (prev && prev !== exT && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+    $('ex-topic').animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 200, easing: 'ease-out' });
   store.set('ditk-exam-last', exT.id);
   const next = EXAM.topics[exT.n] || null;
   $('ex-topic').innerHTML = `<header class="topic-h"><h2><span class="no" aria-hidden="true">${exT.n}</span>${esc(exT.title)}</h2></header>
@@ -284,6 +288,11 @@ document.querySelectorAll('[data-list]').forEach(sec => {
   boxes.forEach((b, i) => {
     b.checked = !!ticks[i]; b.addEventListener('change', prog);
     b.setAttribute('aria-label', 'Hecho: ' + b.closest('.step').querySelector('.hd b').textContent);
+    // the whole card ticks, except its own links and when he is selecting text to copy
+    b.closest('.step').addEventListener('click', e => {
+      if (e.target === b || e.target.closest('a') || String(getSelection())) return;
+      b.checked = !b.checked; prog();
+    });
   });
   const btn = sec.querySelector('[data-reset]');
   let undo = null, timer = 0;
